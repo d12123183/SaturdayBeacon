@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, user-scalable=no,
+		shrink-to-fit=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+
+	<title>iBeacon Scan</title>
+
+<!--	<style>
+		@import 'ui/css/evothings-app.css';
+	</style>-->
+
+	<script>
+		// Redirect console.log to Evothings Workbench.
+		if (window.hyper && window.hyper.log) { console.log = hyper.log }
+	</script>
+
+	<script src="cordova.js"></script>
+	<script src="libs/jquery/jquery.js"></script>
+	<script src="libs/evothings/evothings.js"></script>
+	<script src="libs/evothings/ui/ui.js"></script>
+	<script src="app.js"></script>
+
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+</head>
+
+<body>
+
+	<div data-role="page" data-theme="a">
+
+		<div data-role="header" data-theme="a">
+
+			<h1>DIT iBeacon Scan</h1>
+
+		</div>
+
+			<div data-role="content" data-theme="a">
+
+				<p align="justify">
+
+				<ul id="found-beacons" class="dynamic"></ul>
+
+				</p>
+
+				</div><!-- /content -->
+
+		<div data-role="footer" data-theme="a" data-position="fixed">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="mailto:d12123183@mydit.ie" class="ui-btn ui-icon-info ui-btn-icon-left">Info</a></li>
+					<li><a href="tel:0876222862" class="ui-btn ui-icon-phone ui-btn-icon-left">Call</a></li>
+					<li><a href="http://www.openstreetmap.org/#map=18/53.33717/-6.26767" width="640" height="480"" class="ui-btn ui-icon-location ui-btn-icon-left">Location</a></li>
+				</ul>
+			</div><!-- /navbar -->
+
+		</div><!-- /footer -->
+
+		</div>
+
+
+
+
+</body>
+
+</html>
