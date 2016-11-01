@@ -139,11 +139,13 @@ var app = (function()
 				// Create tag to display beacon data.
 				var element = $(
 					'<li>'
-					+	'<strong>UUID: ' + beacon.uuid + '</strong><br />'
+
+					// +	'<strong>UUID: ' + beacon.uuid + '</strong><br />'
 					+	'Major: ' + beacon.major + '<br />'
-					+	'Minor: ' + beacon.minor + '<br />'
-					+	'Proximity: ' + beacon.proximity + '<br />'
-					+	'RSSI: ' + beacon.rssi + '<br />'
+					//  +	'Minor: ' + beacon.minor + '<br />'
+                    //  +	'Proximity: ' + beacon.proximity + '<br />'
+					+	'Distance: ' + beacon.accuracy + '<br />'
+					//  +	'RSSI: ' + beacon.rssi + '<br />'
 					+ 	'<div style="background:rgb(255,128,64);height:20px;width:'
 					+ 		rssiWidth + '%;"></div>'
 					+ '</li>'
