@@ -19,6 +19,8 @@
 	</script>
 
 	<script src="cordova.js"></script>
+	<script src="trilateration.js-master/trilateration.js"></script>
+	<script src="trilateration.js-master/tlateration.js"></script>
 	<script src="libs/jquery/jquery.js"></script>
 	<script src="libs/evothings/evothings.js"></script>
 	<script src="libs/evothings/ui/ui.js"></script>
@@ -27,10 +29,14 @@
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
 	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
 
-	<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+    <link rel="stylesheet" href="libs/leaflet/leaflet.css" />
+	<script src="libs/leaflet/leaflet.js"></script>
 
+	<script src="libs/leafletgrid/L.Grid.js"></script>
+	<script src="libs/leafletlabel/src/Label.js"></script>
+
+	<script src="libs/leafletlabel/src/Marker.Label.js"></script>
 
 
 </head>
@@ -58,13 +64,13 @@
 		<div id="map" style="height: 600px;"></div>
 
 
-
 		<script>
             // leaflet map code
 
             var map = L.map('map',{
 
-                crs: L.CRS.Simple
+                crs: L.CRS.Simple,
+                minZoom: 0
 
             });
 
@@ -81,23 +87,69 @@
                 return yx(y, x);  // When doing xy(x, y);
             };
 
+			//Nodes;
+/*            var n1      = xy(425, 646);
+            var n2      = xy(379, 661);
+            var n3      = xy(338, 651);
+            var n4      = xy(341, 671);
+            var n5      = xy(342, 693);
+            var n6      = xy(345, 714);
+            var n7      = xy(298, 741);
+            var n8      = xy(349, 758);
+            var n9      = xy(356, 805);
+            var n10     = xy(360, 839);
+            var n11     = xy(365, 867);
+            var n12     = xy(396, 755);
+            var n13     = xy(417, 752);
+            var n14     = xy(472, 745);
+            var n15     = xy(488, 740);
+            var n16     = xy(534, 738);
+            var n17     = xy(550, 745);
+            var n18     = xy(547, 724);*/
 
 
-            var b1      = xy(0, 30);
-            var b2      = xy(500, 500);
-            var b3      = xy(100, 100);
+/*
+            L.marker(n1).addTo(map).bindTooltip("N1");
+            L.marker(n2).addTo(map).bindTooltip("N2");
+			L.marker(n3).addTo(map).bindTooltip('N3');
+            L.marker(n4).addTo(map).bindTooltip('N4');
+            L.marker(n5).addTo(map).bindTooltip('N5');
+            L.marker(n6).addTo(map).bindTooltip('N6');
+            L.marker(n7).addTo(map).bindTooltip('N7');
+            L.marker(n8).addTo(map).bindTooltip('N8');
+            L.marker(n9).addTo(map).bindTooltip('N9');
+            L.marker(n10).addTo(map).bindTooltip('N10');
+            L.marker(n11).addTo(map).bindTooltip('N11');
+            L.marker(n12).addTo(map).bindTooltip('N12');
+            L.marker(n13).addTo(map).bindTooltip('N13');
+            L.marker(n14).addTo(map).bindTooltip('N14');
+            L.marker(n15).addTo(map).bindTooltip('N15');
+            L.marker(n16).addTo(map).bindTooltip('N16');
+            L.marker(n17).addTo(map).bindTooltip('N17');
+            L.marker(n18).addTo(map).bindTooltip('N18');
+*/
+
+            //Beacon xy
+            var b1      = xy(356, 711);
+            var b2      = xy(393, 708);
+            var b3      = xy(402, 764);
+            var b4     = xy(document.getElementById('found-beacons')[0].value, document.getElementById('found-beacons')[1].value);
 
 
-            L.marker(b1).addTo(map).bindPopup("Beacon 1");
+            // Beacon Markers
+            L.marker(b1).addTo(map).bindTooltip('Beacon 1');
+            L.marker(b2).addTo(map).bindTooltip('Beacon 2');
+            L.marker(b3).addTo(map).bindTooltip('Beacon 3');
+            L.marker(b4).addTo(map).bindTooltip('Beacon 3');
 
-            L.marker(b2).addTo(map).bindPopup('Beacon 2');
+            //L.grid().addTo(map);
 
-            L.marker(b3).addTo(map).bindPopup('Beacon 3');
+            //var travel = L.polyline([b1, b2, b3, b4, b5]).addTo(map);
 
-            var travel = L.polyline([b1, b2, b3, b1]).addTo(map);
+           map.fitBounds(bounds);
+           map.setView([900, 300], 1);
 
 
-            map.fitBounds(bounds);
 
             // L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
             //    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -116,11 +168,16 @@
 		<!-- /content -->
 
 		<div data-role="footer" data-theme="a" data-position="fixed">
+
+
 			<div data-role="navbar">
+				<p  id="curlocation"></p>
 				<ul>
+
+
 					<li><a href="mailto:d12123183@mydit.ie" class="ui-btn ui-icon-info ui-btn-icon-left">Info</a></li>
 					<li><a href="tel:0876222862" class="ui-btn ui-icon-phone ui-btn-icon-left">Call</a></li>
-					<li><a href="http://www.openstreetmap.org/#map=18/53.33717/-6.26767" width="640" height="480"" class="ui-btn ui-icon-location ui-btn-icon-left">Location</a></li>
+					<li><a href="http://www.openstreetmap.org/#map=18/53.33717/-6.26767" width="640" height="480" class="ui-btn ui-icon-location ui-btn-icon-left">Location</a></li>
 				</ul>
 			</div><!-- /navbar -->
 

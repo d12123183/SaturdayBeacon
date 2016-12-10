@@ -60,11 +60,13 @@
 				canvas = document.getElementById("canvas1");
 				ctx = canvas.getContext("2d");
 				
-				p1 = { x:   100, y:   100, z:  0, r: 80 };
-				p2 = { x: 200, y: 200, z:  0, r: 70 };
-				p3 = { x: 180, y: 100, z: 0, r: 60 };
-				
+				p1 = { x:   1, y:   1, z:  0, r: 1 };
+				p2 = { x: 1, y: 3, z:  0, r: 1 };
+				p3 = { x: 2, y: 2, z: 0, r: 1 };
+
 				p4 = trilaterate(p1, p2, p3);
+
+
 				
 				if (p4 !== null)
 				{

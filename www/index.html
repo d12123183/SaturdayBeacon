@@ -19,6 +19,8 @@
 	</script>
 
 	<script src="cordova.js"></script>
+	<script src="trilateration.js-master/trilateration.js"></script>
+	<script src="trilateration.js-master/tlateration.js"></script>
 	<script src="libs/jquery/jquery.js"></script>
 	<script src="libs/evothings/evothings.js"></script>
 	<script src="libs/evothings/ui/ui.js"></script>
@@ -85,8 +87,8 @@
                 return yx(y, x);  // When doing xy(x, y);
             };
 
-			//Nodes
-            var n1      = xy(425, 646);
+			//Nodes;
+/*            var n1      = xy(425, 646);
             var n2      = xy(379, 661);
             var n3      = xy(338, 651);
             var n4      = xy(341, 671);
@@ -103,9 +105,10 @@
             var n15     = xy(488, 740);
             var n16     = xy(534, 738);
             var n17     = xy(550, 745);
-            var n18     = xy(547, 724);
+            var n18     = xy(547, 724);*/
 
 
+/*
             L.marker(n1).addTo(map).bindTooltip("N1");
             L.marker(n2).addTo(map).bindTooltip("N2");
 			L.marker(n3).addTo(map).bindTooltip('N3');
@@ -124,16 +127,20 @@
             L.marker(n16).addTo(map).bindTooltip('N16');
             L.marker(n17).addTo(map).bindTooltip('N17');
             L.marker(n18).addTo(map).bindTooltip('N18');
+*/
 
             //Beacon xy
             var b1      = xy(356, 711);
             var b2      = xy(393, 708);
             var b3      = xy(402, 764);
+            var b4     = xy(px, py);
+
 
             // Beacon Markers
             L.marker(b1).addTo(map).bindTooltip('Beacon 1');
             L.marker(b2).addTo(map).bindTooltip('Beacon 2');
             L.marker(b3).addTo(map).bindTooltip('Beacon 3');
+            L.marker(b4).addTo(map).bindTooltip('Beacon 3');
 
             //L.grid().addTo(map);
 
@@ -161,8 +168,13 @@
 		<!-- /content -->
 
 		<div data-role="footer" data-theme="a" data-position="fixed">
+
+
 			<div data-role="navbar">
+				<p  id="curlocation"></p>
 				<ul>
+
+
 					<li><a href="mailto:d12123183@mydit.ie" class="ui-btn ui-icon-info ui-btn-icon-left">Info</a></li>
 					<li><a href="tel:0876222862" class="ui-btn ui-icon-phone ui-btn-icon-left">Call</a></li>
 					<li><a href="http://www.openstreetmap.org/#map=18/53.33717/-6.26767" width="640" height="480" class="ui-btn ui-icon-location ui-btn-icon-left">Location</a></li>

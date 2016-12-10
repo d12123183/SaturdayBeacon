@@ -176,7 +176,7 @@ var app = (function()
                 +	'x: ' + px + '  ' +	'y: ' + py + '<br />'
                 + '</li>'
             );
-                var a =
+
 
 				$('#warning').remove();
 				$('#found-beacons').append(element);

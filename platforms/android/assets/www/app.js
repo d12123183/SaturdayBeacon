@@ -125,6 +125,13 @@ var app = (function()
 
 		var timeNow = Date.now();
 
+        p1 = { x: 1, y: 6, z: 0, r: 1, major: 40851};
+        p2 = { x: 5, y: 3, z: 0, r: 1, major: 54870};
+        p3 = { x: 3, y: 4, z: 0, r: 1, major: 62910};
+
+
+
+
 		// Update beacon list.
 		$.each(beacons, function(key, beacon)
 		{
@@ -137,22 +144,43 @@ var app = (function()
 				else if (beacon.rssi < 0) { rssiWidth = 100 + beacon.rssi; }
 
 				// Create tag to display beacon data.
-				var element = $(
-					'<li>'
 
-					// +	'<strong>UUID: ' + beacon.uuid + '</strong><br />'
-					+	'Major: ' + beacon.major + '<br />'
-					//  +	'Minor: ' + beacon.minor + '<br />'
-                    //  +	'Proximity: ' + beacon.proximity + '<br />'
-					+	'Distance: ' + beacon.accuracy + '<br />'
-					//  +	'RSSI: ' + beacon.rssi + '<br />'
-					+ 	'<div style="background:rgb(255,128,64);height:20px;width:'
-					+ 		rssiWidth + '%;"></div>'
-					+ '</li>'
+
+                if (p1.major == beacon.major) {
+                    p1.r = beacon.accuracy;
+                }
+                else if (p2.major == beacon.major) {
+                    p2.r = beacon.accuracy;
+                }
+
+                else if (p3.major == beacon.major) {
+                    p3.r = beacon.accuracy;
+                }
+
+                /*trilateparam1 = [p1.x,p1.y,p1.r];
+                trilateparam2 = [p2.x,p2.y,p2.r];
+                trilateparam3 = [p3.x,p3.y,p3.r];*/
+
+                //p4 = trilaterate(trilateparam1, trilateparam2, trilateparam3);
+
+
+               var S = (Math.pow(p3.x, 2.) - Math.pow(p2.x, 2.) + Math.pow(p3.y, 2.) - Math.pow(p2.y, 2.) + Math.pow(p2.r, 2.) - Math.pow(p3.r, 2.)) / 2.0;
+                 var T = (Math.pow(p1.x, 2.) - Math.pow(p2.x, 2.) + Math.pow(p1.y, 2.) - Math.pow(p2.y, 2.) + Math.pow(p2.r, 2.) - Math.pow(p1.r, 2.)) / 2.0 ;
+
+                 var py = ((S * (p2.x - p3.x)) - (S * (p2.x - p1.x))) / (((p1.y - p2.y) * (p2.x - p3.x)) - ((p3.y - p2.y) * (p2.x - p1.x)));
+                 var px = ((py * (p1.y -p2.y )) - T) / (p2.x - p1.x);
+
+
+                var element = $(
+					'<li>'
+                    +	'x: ' + px + '  ' +	'y: ' + py + '<br />'
+                    + '</li>'
 				);
 
 				$('#warning').remove();
 				$('#found-beacons').append(element);
+
+
 
 
 			}
