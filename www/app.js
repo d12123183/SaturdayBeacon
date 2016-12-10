@@ -130,8 +130,6 @@ var app = (function()
         p3 = { x: 3, y: 4, z: 0, r: 1, major: 62910};
 
 
-
-
 		// Update beacon list.
 		$.each(beacons, function(key, beacon)
 		{
@@ -172,17 +170,62 @@ var app = (function()
 
 
                 var element = $(
-                '<li>'
-                +	'x: ' + px + '  ' +	'y: ' + py + '<br />'
+                '<li id="xloc">'
+                +px
+                + '</li>'+'<li id="yloc">'
+                +py
                 + '</li>'
+
+
             );
+                document.getElementById('curlocationx').innerHTML=px;
+                document.getElementById('curlocationy').innerHTML=py;
 
 
-				$('#warning').remove();
-				$('#found-beacons').append(element);
+                var map = L.map('map',{
 
+                    crs: L.CRS.Simple,
+                    minZoom: 0
 
+                });
 
+                var bounds = [[0,0], [1000,1000]];
+
+                var image = L.imageOverlay('ditmap/DIT-FloorPlan.jpg', bounds).addTo(map);
+
+                var yx = L.latLng;
+
+                var xy = function(x, y) {
+                    if (L.Util.isArray(x)) {    // When doing xy([x, y]);
+                        return yx(x[1], x[0]);
+                    }
+                    return yx(y, x);  // When doing xy(x, y);
+                };
+
+                //Beacon xy
+                var b1      = xy(1, 2);
+                var b2      = xy(3, 5);
+                var b3      = xy(px, py);
+                //var x1 = document.getElementById('curlocationx').innerHTML;
+                //var y1 = document.getElementById('curlocationy').innerHTML;
+                // var b3      = xy(x1, y1);
+                //    var b4     = xy(, document.getElementById('yloc').innerHTML);
+
+                // Beacon Markers
+                L.marker(b1).addTo(map).bindTooltip('Beacon 1');
+                L.marker(b2).addTo(map).bindTooltip('Beacon 2');
+                 L.marker(b3).addTo(map).bindTooltip('Beacon 3');
+                //L.marker(b4).addTo(map).bindTooltip('Beacon 4');
+
+                //L.grid().addTo(map);
+
+                //var travel = L.polyline([b1, b2, b3, b4, b5]).addTo(map);
+
+                map.fitBounds(bounds);
+                map.setView([800, 200], 1);
+
+                $('#warning').remove();
+			//	$('#found-beacons').append(element);
 
 			}
 		});
