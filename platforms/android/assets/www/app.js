@@ -130,8 +130,6 @@ var app = (function()
         p3 = { x: 3, y: 4, z: 0, r: 1, major: 62910};
 
 
-
-
 		// Update beacon list.
 		$.each(beacons, function(key, beacon)
 		{
@@ -191,7 +189,7 @@ var app = (function()
 
                 });
 
-                var bounds = [[0,0], [200,200]];
+                var bounds = [[0,0], [1000,1000]];
 
                 var image = L.imageOverlay('ditmap/DIT-FloorPlan.jpg', bounds).addTo(map);
 
@@ -226,13 +224,8 @@ var app = (function()
                 map.fitBounds(bounds);
                 map.setView([800, 200], 1);
 
-
-
                 $('#warning').remove();
 			//	$('#found-beacons').append(element);
-
-
-
 
 			}
 		});

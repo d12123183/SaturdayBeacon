@@ -143,7 +143,6 @@ var app = (function()
 
 				// Create tag to display beacon data.
 
-
                 if (p1.major == beacon.major) {
                     p1.r = beacon.accuracy;
                 }
@@ -203,8 +202,8 @@ var app = (function()
                 };
 
                 //Beacon xy
-                var b1      = xy(1, 2);
-                var b2      = xy(3, 5);
+                //var b1      = xy(1, 2);
+                //var b2      = xy(3, 5);
                 var b3      = xy(px, py);
                 //var x1 = document.getElementById('curlocationx').innerHTML;
                 //var y1 = document.getElementById('curlocationy').innerHTML;
@@ -212,8 +211,8 @@ var app = (function()
                 //    var b4     = xy(, document.getElementById('yloc').innerHTML);
 
                 // Beacon Markers
-                L.marker(b1).addTo(map).bindTooltip('Beacon 1');
-                L.marker(b2).addTo(map).bindTooltip('Beacon 2');
+               // L.marker(b1).addTo(map).bindTooltip('Beacon 1');
+               // L.marker(b2).addTo(map).bindTooltip('Beacon 2');
                  L.marker(b3).addTo(map).bindTooltip('Beacon 3');
                 //L.marker(b4).addTo(map).bindTooltip('Beacon 4');
 
