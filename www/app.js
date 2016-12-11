@@ -134,7 +134,7 @@ var app = (function()
 		$.each(beacons, function(key, beacon)
 		{
 			// Only show beacons that are updated during the last 60 seconds.
-			if (beacon.timeStamp + 60000 > timeNow)
+			if (beacon.timeStamp + 600000 > timeNow)
 			{
 				// Map the RSSI value to a width in percent for the indicator.
 				var rssiWidth = 1; // Used when RSSI is zero or greater.
@@ -174,9 +174,80 @@ var app = (function()
                 + '</li>'+'<li id="yloc">'
                 +py
                 + '</li>'
-
-
             );
+
+
+
+
+
+
+
+                function errorCB(err) {
+                    alert("Error processing SQL: "+err.code);
+                    document.getElementById('dbtest').innerHTML='error in db';
+                }
+
+                // Transaction success callback
+                //
+                function successCB() {
+
+
+                    document.getElementById('dbtest').innerHTML='success in db';
+                }
+
+                // Cordova is ready
+                //
+
+
+
+
+                    //db.transaction(searchQueryDB, errorCB);
+                    //db.transaction(querySuccess, errorCB);
+
+
+
+
+
+                function searchQueryDB(tx) {
+
+                  //  tx.executeSql('select * from nodes ',[], querySuccess, errorCB);
+                    tx.executeSql('select * from nodes where '+ px + ' <=upper_x and ' +py + '<=upper_y and '+ px + ' >=lower_x and ' +py + '>=lower_y',[], querySuccess, errorCB);
+                        //'where '+ px + ' <= upper_x AND '+ px + ' >= lower_x AND' +py + '<=upper_y AND '+ px + '>= lower_y',
+
+
+                }
+
+              function querySuccess(tx, results) {
+                    var len = results.rows.length;
+                    document.getElementById('dbtest').innerHTML='test in db'+len;
+                    for (var i = 0; i < len; i++) {
+                        document.getElementById('dbtest').innerHTML='found something';
+                        var tmpArgs=results.rows.item(i).node_location;
+                        document.getElementById('dbtest').innerHTML=tmpArgs;
+                    }
+                     //document.getElementById('dbtest').innerHTML='test in db'+len;
+                }
+
+                function errorCB(err) {
+                    alert("Error processing SQL: "+err.code);
+
+                }
+
+                // Transaction success callback
+                //
+                function successCB() {
+
+                                  document.getElementById('dbtest').innerHTML='success in db';
+                }
+
+                // Cordova is ready
+                //
+
+                var db = window.openDatabase("Database", "1.0", "Cordova Demo", 200000);
+
+                db.transaction(searchQueryDB, errorCB);
+                db.transaction(querySuccess, errorCB);
+
                 document.getElementById('curlocationx').innerHTML=px;
                 document.getElementById('curlocationy').innerHTML=py;
 

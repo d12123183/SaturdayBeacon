@@ -39,6 +39,121 @@
 	<script src="libs/leafletlabel/src/Marker.Label.js"></script>
 
 
+
+
+	<script type="text/javascript" charset="utf-8">
+        document.addEventListener("deviceready", onDeviceReady, false);
+        function populateDB(tx) {
+            tx.executeSql(
+                'CREATE TABLE if not exists beacons ( beacon_id varchar(8) NOT NULL, beacon_name varchar(20) NOT NULL, beacon_x int(8) NOT NULL, beacon_y int(8) NOT NULL,floor_level int(11) NOT NULL,major int(10) NOT NULL,minor int(10) NOT NULL, uuid int(40) NOT NULL )'
+						);
+        }
+        function populateDBrooms(tx) {
+            tx.executeSql(
+                'CREATE TABLE rooms (  room_id varchar(8) NOT NULL,  room_name varchar(20) NOT NULL,  room_info varchar(50) NOT NULL,  nearest_node varchar(8) NOT NULL,  room_size varchar(8) NOT NULL,  room_capacity int(8) NOT NULL)'
+            );
+        }
+        function populateDBnodes(tx) {
+            tx.executeSql(
+                'CREATE TABLE nodes ( node_id varchar(8) NOT NULL,node_location varchar(20) NOT NULL,  node_x int(8) NOT NULL,  node_y int(8) NOT NULL , upper_x int(8), lower_x int(8), upper_y int(8), lower_y int(8))'
+            );
+        }
+        function populateDBedges(tx) {
+            tx.executeSql(
+                'CREATE TABLE edges (edge_id varchar(8) NOT NULL,start_node varchar(8) NOT NULL,end_node varchar(8) NOT NULL, weight int(8) NOT NULL)'
+			);
+        }
+
+
+        function insertB3(tx) {
+            tx.executeSql(
+             'INSERT INTO beacons (beacon_id, beacon_name, beacon_x, beacon_y, floor_level, major, minor, uuid) VALUES ("b1", "Beacon 1", 356, 711, 0, 0, 0, 0),("b2", "Beacon 2", 393, 708, 0, 0, 0, 0), ("b3", "Beacon 3", 402, 764, 0, 0, 0, 0)' );
+        }
+
+        function insertDBrooms(tx) {
+            tx.executeSql(
+                'INSERT INTO rooms (room_id, room_name, room_info, nearest_node, room_size, room_capacity) VALUES("A001", "Annex", "Annex Foyer", "N8", "50", 100),("A002", "Bank", "Bank of Ireland Annex", "N12", "8", 10),("A003", "Stairs", "Annex Ground Floor Stairs", "N2", "50", 50),("A004", "Porter", "Security and Porter Room", "N5", "10", 5),("A005", "Toilet", "Ground Floor Female Toilet", "N04", "4", 2),("A006", "Toilet", "Ground Floor Maile Toilet", "N4", "4", 2),("A007", "Annex Stairs", "Annex Stairs Level 0 to all upper levels", "N02", "20", 50),("A008", "Annex Lift ", "Ground floor Lift, Access to four upper floors", "N01", "4", 8),("A009", "Annex Canteen", "Main Canteen Kevin Street Annex", "N7", "100", 100),("A010", "Annex Exit ", "Annex Exit to Inner Court Yard", "N03", "2", 2),("A019", "Staff Lockers", "Staff Locker Room Ground Floor Annex", "N10", "5", 8),("A025", "A025 Lecture Room", "Lecture Room", "N14", "25", 40),("A026", "A026 Lecture Room", "Annex Lecture Room Ground Floor", "N14", "25", 40),("A027", "A027 Lecture Room", "Annex Lecture Room Ground Floor", "N14", "25", 40),("A028", "A028 Lecture Room", "Annex Lecture Room Ground Floor", "N15", "25", 40),("A029", "A29 Office", "A29 Office", "N16", "25", 40)');
+        }
+
+        function insertDBedges(tx) {
+            tx.executeSql(
+                'INSERT INTO edges (edge_id, start_node, end_node, weight) VALUES("e1", "N1", "N2", 5),("e10", "N7", "N9", 8),("e11", "N8", "N12", 4),("e12", "N8", "N9", 4),("e13", "N9", "N10", 3),("e14", "N10", "N11", 3),("e15", "N12", "N13", 2),("e16", "N13", "N14", 3),("e17", "N14", "N15", 1),("e18", "N15", "N16", 1),("e19", "N16", "N17", 1),("e2", "N2", "N4", 2),("e20", "N16", "N18", 1),("e21", "N17", "N18", 1),("e3", "N3", "N4", 2),("e4", "N4", "N5", 2),("e5", "N5", "N6", 2),("e6", "N6", "N7", 4),("e7", "N6", "N8", 4),("e8", "N6", "N12", 4),("e9", "N7", "N8", 4)');
+        }
+
+        function insertDBnodes(tx) {
+
+        //    tx.executeSql("INSERT INTO nodes (node_id, node_location, node_x, node_y, upper_x, lower_x, upper_y,lower_y) VALUES (?,?,?,?,?,?,?,?,?)", ["n1", "n23", 356, 711, 1, 2, 3,4,5], function(tx,res){
+         //       alert("Node Added");
+         //   });
+                   tx.executeSql(
+                         'INSERT INTO nodes (node_id, node_location, node_x, node_y, upper_x, lower_x, upper_y,lower_y) VALUES ("n1", "Corridoor", 425, 646, 430,420,650,640 ),("n10", "Corridoor", 360, 839,360,350,840,830),("n11", "Corridoor", 365, 867,370,350,870,860),("n12", "Corridoor", 396, 755, 400, 390, 760, 750),("n13", "Corridoor", 417, 752,420, 410, 760, 750),("n14", "Corridoor", 472, 745, 480, 470, 750, 740),("n15", "Corridoor", 488, 740, 490, 480, 740, 730),("n16", "Corridoor", 534, 738, 540, 530, 730, 740),("n17", "Corridoor", 550, 745, 550, 540, 750, 740),("n18", "Corridoor", 547, 724, 550, 540, 720,730 ),("n2", "Corridoor", 379, 661,380, 370, 660, 670),("n3", "Corridoor", 338, 651, 340, 330, 660, 650),("n4", "Corridoor", 340, 671, 340, 330, 680, 670),("n5", "Corridoor", 342, 693, 350, 340, 700, 690),("n6", "Annex Foyer", 345, 714, 350, 340, 720, 710),("n7", "Annex Foyer", 298, 741, 300, 290, 750, 740),("n8", "Annes Foyer", 349, 758, 350, 340, 760, 750),("n9", "Annex Foyer", 356, 805, 360,350,810,800),("end", "mainlobby", 1, 10, 10,0,10,0 )' );
+               //'INSERT INTO nodes (node_id, node_location, node_x, node_y, upper_x, lower_x, upper_y, lower_y) VALUES("n1","Corridoor", 425,646,430,420,650,640 )');
+        }
+
+        /*function searchQueryDB(tx) {
+            document.getElementById('dbtest').innerHTML='found somethingejr';
+            tx.executeSql('SELECT * FROM nodes',
+                [], querySuccess, errorCB);
+        }
+
+        function querySuccess(tx, results) {
+            var len = results.rows.length;
+            for (var i = 0; i < len; i++) {
+                document.getElementById('dbtest').innerHTML='found something';
+                var tmpArgs=results.rows.item(i).node_id;
+                document.getElementById('dbtest').innerHTML=tmpArgs;
+            }
+            //document.getElementById('dbtest').innerHTML='test in db'+len;
+        }*/
+
+        function errorCB(err) {
+            alert("Error processing SQL: "+err.code);
+            document.getElementById('dbtest').innerHTML='error in db';
+        }
+
+        // Transaction success callback
+        //
+        function successCB() {
+            var db = window.openDatabase("Database", "1.0", "Cordova Demo", 200000);
+            db.transaction(queryDB, errorCB);
+            document.getElementById('dbtest').innerHTML='success in db', '';
+        }
+        function committr(tx) {
+            tx.executeSql(
+                'commit');
+        }
+
+        // Cordova is ready
+        //
+        function onDeviceReady() {
+
+            var db = window.openDatabase("Database", "1.0", "Cordova Demo", 200000);
+
+
+            db.transaction(populateDBrooms, errorCB, successCB);
+            db.transaction(populateDBedges, errorCB, successCB);
+            db.transaction(populateDBnodes, errorCB, successCB);
+            db.transaction(populateDB, errorCB, successCB);
+
+
+
+       //    db.transaction(insertB1, errorCB, successCB);
+          //  db.transaction(insertB2, errorCB, successCB);
+           db.transaction(insertB3, errorCB, successCB);
+            db.transaction(insertDBrooms, errorCB, successCB);
+            db.transaction(insertDBedges, errorCB, successCB);
+           db.transaction(insertDBnodes, errorCB, successCB);
+          db.transaction(committr, errorCB, successCB);
+
+           // db.transaction(searchQueryDB, errorCB);
+            //db.transaction(querySuccess, errorCB);
+
+        }
+	</script>
+
+
+
+
 </head>
 
 <body>
@@ -108,8 +223,6 @@
            map.fitBounds(bounds);
            map.setView([900, 300], 1);
 
-
-
             // L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
             //    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             // }).addTo(map);
@@ -131,6 +244,7 @@
 
 			<div data-role="navbar">
 				<p  id="curlocationx"></p>  <p  id="curlocationy"></p>
+				  <p  id="dbtest"></p>
 				<ul>
 					<li><a href="mailto:d12123183@mydit.ie" class="ui-btn ui-icon-info ui-btn-icon-left">Info</a></li>
 					<li><a href="tel:0876222862" class="ui-btn ui-icon-phone ui-btn-icon-left">Call</a></li>
