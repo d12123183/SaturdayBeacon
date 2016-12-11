@@ -223,13 +223,14 @@ var app = (function()
                     for (var i = 0; i < len; i++) {
                         document.getElementById('dbtest').innerHTML='found something';
                         var tmpArgs=results.rows.item(i).node_location;
-                        document.getElementById('dbtest').innerHTML=tmpArgs;
+                        document.getElementById('dbtest').innerHTML='curr_location :x:'+px+' y:'+py+ ' area_name '+tmpArgs;
                     }
                      //document.getElementById('dbtest').innerHTML='test in db'+len;
                 }
 
                 function errorCB(err) {
-                    alert("Error processing SQL: "+err.code);
+                    //alert("Error processing SQL: "+err.code);
+                    var a=10;
 
                 }
 
@@ -248,8 +249,8 @@ var app = (function()
                 db.transaction(searchQueryDB, errorCB);
                 db.transaction(querySuccess, errorCB);
 
-                document.getElementById('curlocationx').innerHTML=px;
-                document.getElementById('curlocationy').innerHTML=py;
+                //document.getElementById('curlocationx').innerHTML=px;
+                //document.getElementById('curlocationy').innerHTML=py;
 
 
                 var map = L.map('map',{
@@ -292,7 +293,7 @@ var app = (function()
                 //var travel = L.polyline([b1, b2, b3, b4, b5]).addTo(map);
 
                 map.fitBounds(bounds);
-                map.setView([800, 200], 1);
+                map.setView([500, 200], 1);
 
                 $('#warning').remove();
 			//	$('#found-beacons').append(element);
